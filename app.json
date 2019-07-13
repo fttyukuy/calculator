@@ -1,12 +1,11 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarBackgroundColor": "#f5f5f5",
+    "navigationBarTitleText": "calculator",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
