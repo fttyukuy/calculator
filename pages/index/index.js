@@ -11,6 +11,6 @@ Page({
   },
   onLoad: function () {},
   handleTap(event) {
-    console.log(event.currentTarget.dataset.value);
+    const value = event.currentTarget.dataset.value;
   }
 })
