@@ -1,4 +1,47 @@
 <!--index.wxml-->
 <view class="container">
-1111
+  <view class="show-container">
+    <text class="input">{{input}}</text>
+    <text class="result">{{result}}</text>
+  </view>
+  <view class="button-container">
+    <button 
+      class="button" 
+      wx:for="{{button_row1}}" 
+      wx:key="{{index}}" 
+      bind:tap="handleTap"
+      data-value="{{item}}"
+    >{{item}}</button>
+    <button 
+      class="button" 
+      wx:for="{{button_row2}}" 
+      wx:key="{{index}}" 
+      bind:tap="handleTap"
+      data-value="{{item}}"
+    >{{item}}</button>
+    <button 
+      class="button" 
+      wx:for="{{button_row3}}" 
+      wx:key="{{index}}" 
+      bind:tap="handleTap"
+      data-value="{{item}}"
+    >{{item}}</button>
+    <button 
+      class="button" 
+      wx:for="{{button_row4}}" 
+      wx:key="{{index}}" 
+      bind:tap="handleTap"
+      data-value="{{item}}"
+    >{{item}}</button>
+    <button 
+      class="button" 
+      wx:for="{{button_row5}}" 
+      wx:key="{{index}}" 
+      bind:tap="handleTap"
+      data-value="{{item}}"
+    >{{item}}</button>
+    <button 
+      class="button button-equal"
+    >=</button>
+  </view>
 </view>
