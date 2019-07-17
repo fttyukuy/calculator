@@ -10,28 +10,33 @@ Page({
     input: '',
     result: ''
   },
-  onLoad: function () {},
 
   //点击按钮显示部分进行相应的显示和操作
   handleTap(event) {
     const value = event.currentTarget.dataset.value;
     const operators = this.data.operators;
+    //判断是否为数字
     if(!isNaN(value)){
       this.input(value)
-    }else if(operators.indexOf(value) > -1){
+    }
+    // 判断是否为运算符
+    else if(operators.indexOf(value) > -1){
       this.operator(value);
     }
+    //判断等号
+    else if (value === '=') {
+      this.operation()
+    }
+    // 清空
     else if(value === "c"){
       this.clear()
-    }else if(value === "Bk"){
+    }
+    //删除
+    else if(value === "Bk"){
       this.backspace()
     }
   },
 
-  // 点击等于进行计算。
-  handleEqual() {
-    this.operation()
-  },
   //按键与输入框进行数据绑定
   input(value) {
     let input = this.data.input;
@@ -39,20 +44,26 @@ Page({
     this.setData({input});
   },
 
-  //运算符判断
+  //运算符判断,不能连续显示运算符且运算符前面必须有数字。
   operator(value) {
     let input = this.data.input;
     if(input==="") return;
     let end = input.substr(input.length - 1);
     if(this.data.operators.indexOf(end)===-1){
-      this.input(value);
-    }else if(end===value){
-      return
+      //判断是否为小数点
+      if(value!=='.'){
+        this.input(value);
+      }else{
+       this.hasPoint(input,value);
+      }
+      
+    }else if(end!==value){
+      if (value !== '.') {
+        input = input.substr(0, input.length - 1) + value;
+        this.setData({ input });
+      } else return;
     }else{
-      //当存在多个相同符号时，替换存在bug
-      // input =input.replace(end, value);
-      input = input.substr(0,input.length-1) + value;
-      this.setData({input});
+      return;
     }
   },
 
@@ -116,13 +127,13 @@ Page({
   isExist(arr) {
     let index = 0;
     const firstOperation = ['×', '÷', '%'];
-  for(let i =0 ; i<arr.length ; i++){
-    index = firstOperation.indexOf(arr[i]);
-    if(index!==-1){
-      return i;
+    for(let i =0 ; i<arr.length ; i++){
+      index = firstOperation.indexOf(arr[i]);
+      if(index!==-1){
+        return i;
+      }
     }
-  }
-  return -1;
+    return -1;
   },
 
   //基本运算函数
@@ -141,5 +152,17 @@ Page({
       case '-': result =v1 - v2; break;
     }
     return result;
+  },
+
+  //确定每个数值中只有一个小数点。
+  hasPoint(input,value) {
+    const pattOperation = /[+\-×÷%]/g;
+    //把input中数值提取出来。
+    let numArr = input.replace(pattOperation, '/').split('/');
+    if (numArr[numArr.length - 1].indexOf('.') === -1) {
+      this.input(value);
+    } else {
+      return;
+    }
   }
 })

@@ -21,12 +21,12 @@ page{
   align-items: center; 
 }
 .input{
-  font-size: 60rpx;
+  font-size: 50rpx;
   font-weight: 500;
+  color: #c7c7c7;
 }
 .result{
-  font-size: 50rpx;
-  color: #c7c7c7;
+  font-size: 60rpx;
 }
 
 .button-container{

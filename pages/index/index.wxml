@@ -42,7 +42,8 @@
     >{{item}}</button>
     <button 
       class="button button-equal"
-      bind:tap = 'handleEqual'
+      bind:tap = 'handleTap'
+      data-value='='
     >=</button>
   </view>
 </view>
