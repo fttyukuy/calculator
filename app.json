@@ -5,7 +5,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#f5f5f5",
-    "navigationBarTitleText": "Calculator",
+    "navigationBarTitleText": "简易计算器",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
