@@ -8,7 +8,8 @@ Page({
     button_row5: ["%", 0, ".",''],
     operators: ["+", "-", "×", "÷", "%", "."],
     input: '',
-    result: ''
+    result: '',
+    isFirstMinus: false,
   },
 
   //点击按钮显示部分进行相应的显示和操作
@@ -47,7 +48,14 @@ Page({
   //运算符判断,不能连续显示运算符且运算符前面必须有数字。
   operator(value) {
     let input = this.data.input;
-    if(input==="") return;
+    if(input==="") {
+      //首位是否为减号
+      if(value ==='-'){
+        this.input(value);
+        this.setData({isFirstMinus: true})
+      }
+      return;
+    }
     let end = input.substr(input.length - 1);
     if(this.data.operators.indexOf(end)===-1){
       //判断是否为小数点
@@ -57,8 +65,9 @@ Page({
        this.hasPoint(input,value);
       }
       
-    }else if(end!==value){
-      if (value !== '.') {
+    }else if(end!==value && input !=='-'){
+    
+      if (value !== '.' ) {
         input = input.substr(0, input.length - 1) + value;
         this.setData({ input });
       } else return;
@@ -92,6 +101,10 @@ Page({
     if(this.data.operators.indexOf(lastChar)!==-1){
       input = input.substr(0, input.length-1);
     }
+    //判断首字符是否为负号
+    if(this.data.isFirstMinus){
+      input = input.substr(1);
+    }
     //分解字符串
     const pattOperation = /[+\-×÷%]/g;
     if(pattOperation.test(input)){
@@ -99,6 +112,10 @@ Page({
       operationArr = input.match(pattOperation)
       //把数值提取出来存在数组中
       numArr = input.replace(pattOperation, '/').split('/');
+      if (this.data.isFirstMinus) {
+        numArr[0] = '-' + numArr[0];
+        this.setData({isFirstMinus: false});
+      }
       //先计算 乘 除 取余
       while(index!==-1){
         index = this.isExist(operationArr);
@@ -141,7 +158,7 @@ Page({
     v1= parseFloat(v1);
     v2= parseFloat(v2);
     let result = 0;
-    if(v1===0.1 && v2===0.2 && operation==='+'){
+    if((v1===0.1 && v2===0.2 && operation==='+') || (v1 ===0.2 && v2===0.1 && operation==='+')){
       return (v1*10+v2*10)/10;
     }
     switch(operation){
