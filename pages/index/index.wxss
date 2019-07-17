@@ -23,7 +23,7 @@ page{
 .input{
   font-size: 50rpx;
   font-weight: 500;
-  color: #c7c7c7;
+  color: #777;
 }
 .result{
   font-size: 60rpx;

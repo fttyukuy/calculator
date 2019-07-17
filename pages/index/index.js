@@ -10,6 +10,7 @@ Page({
     input: '',
     result: '',
     isFirstMinus: false,
+    isClear: false
   },
 
   //点击按钮显示部分进行相应的显示和操作
@@ -18,23 +19,34 @@ Page({
     const operators = this.data.operators;
     //判断是否为数字
     if(!isNaN(value)){
+      if (this.data.isClear){
+        this.clear();
+      }
       this.input(value)
     }
     // 判断是否为运算符
     else if(operators.indexOf(value) > -1){
+      if (this.data.isClear){
+        this.setData({input: this.data.result, result: '',isClear: false})
+      }
       this.operator(value);
     }
     //判断等号
     else if (value === '=') {
       this.operation()
+      this.setData({isClear: true,isFirstMinus: false})
     }
     // 清空
     else if(value === "c"){
       this.clear()
+
     }
     //删除
     else if(value === "Bk"){
-      this.backspace()
+      if (this.data.isClear) {
+        this.clear();
+      }
+      this.backspace();
     }
   },
 
@@ -78,7 +90,7 @@ Page({
 
   //清空
   clear() {
-    this.setData({input: '',result: ''})
+    this.setData({input: '',result: '',isClear: false})
   },
 
   //删除
@@ -114,7 +126,6 @@ Page({
       numArr = input.replace(pattOperation, '/').split('/');
       if (this.data.isFirstMinus) {
         numArr[0] = '-' + numArr[0];
-        this.setData({isFirstMinus: false});
       }
       //先计算 乘 除 取余
       while(index!==-1){
@@ -168,7 +179,7 @@ Page({
       case '+': result =v1 + v2; break;
       case '-': result =v1 - v2; break;
     }
-    return result;
+    return result.toString();
   },
 
   //确定每个数值中只有一个小数点。
